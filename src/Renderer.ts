@@ -71,9 +71,11 @@ export class Renderer {
     const amb = new AmbientLight(0xFFFFFF, 1)
     scene.add(amb)
 
+    /*
     this.#axes = createAxes()
     this.#axes.scale.set(100, 100, 100)
     scene.add(this.#axes)
+    */
 
     for (let i = -10; i < 11; i++) {
       const g = new BoxGeometry(0.1, 0.1, 1)
@@ -132,7 +134,6 @@ export class Renderer {
     this.#maskContainer.rotation.setFromQuaternion(q)
     this.#maskContainer.position.set(position.x * 2 - this.#canvasWidth, this.#canvasHeigt + position.y * 2, 0)
     this.#maskContainer.scale.set(scale, scale, scale)
-    this.#axes.rotation.setFromQuaternion(q)
     /*
       const root2 = getVec2FromKP(face.keypoints[13])
       const middle2 = getVec2FromKP(face.keypoints[14])

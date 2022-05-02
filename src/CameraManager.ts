@@ -20,9 +20,11 @@ export default class CameraManager {
         audio: false,
         video: {
           // On the mobile device, it means that the front camera is preferred
-          //facingMode: "user",
+          facingMode: "user",
+          /*
           width: 1280,
           height: 720
+          */
         }
     });
     this.#video.srcObject = stream;
