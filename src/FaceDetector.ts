@@ -69,7 +69,6 @@ export default class FaceDetector {
         kps[336],
         kps[9],
         kps[107],
-        kps[66],
       ])
       const nose = getVec3FromKP(face.keypoints[1])
 
