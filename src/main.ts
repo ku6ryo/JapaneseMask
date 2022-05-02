@@ -5,11 +5,6 @@ import { Renderer } from "./Renderer"
 import "sanitize.css/sanitize.css"
 import "./global.css"
 
-const startButton = document.createElement("button")
-startButton.addEventListener("click", main)
-startButton.textContent = "Start"
-document.body.appendChild(startButton)
-
 async function main () {
   const mainCanvas = document.createElement("canvas")
   const mainContext = mainCanvas.getContext("2d")!
@@ -49,3 +44,4 @@ async function main () {
   }
   requestAnimationFrame(loop)
 }
+main()
