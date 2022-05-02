@@ -9,6 +9,9 @@ export default class CameraManager {
 
   constructor() {
     this.#video = document.createElement("video")
+    this.#video.setAttribute('autoplay', '');
+    this.#video.setAttribute('muted', '');
+    this.#video.setAttribute('playsinline', '')
   }
 
   /**
@@ -16,23 +19,23 @@ export default class CameraManager {
    * This function ensure that the image frames of the camera video is ready to be extracted.
    */
   async start() {
+    const stream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          // On the mobile device, it means that the front camera is preferred
+          facingMode: "user",
+          /*
+          width: 1280,
+          height: 720
+          */
+        }
+    });
+    this.#video.srcObject = stream;
     return new Promise<void>(async (resolve) => {
-      const stream = await navigator.mediaDevices.getUserMedia({
-          audio: false,
-          video: {
-            // On the mobile device, it means that the front camera is preferred
-            facingMode: "user",
-            /*
-            width: 1280,
-            height: 720
-            */
-          }
-      });
-      this.#video.srcObject = stream;
-      this.#video.onplaying = () => {
+      this.#video.onloadedmetadata = () => {
+        this.#video.play()
         resolve()
       }
-      this.#video.play()
     })
   }
 

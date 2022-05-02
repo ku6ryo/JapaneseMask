@@ -134,22 +134,6 @@ export class Renderer {
     this.#maskContainer.rotation.setFromQuaternion(q)
     this.#maskContainer.position.set(position.x * 2 - this.#canvasWidth, this.#canvasHeigt + position.y * 2, 0)
     this.#maskContainer.scale.set(scale, scale, scale)
-    /*
-      const root2 = getVec2FromKP(face.keypoints[13])
-      const middle2 = getVec2FromKP(face.keypoints[14])
-      const ringPos2 = root2.clone().lerp(middle2, 0.8)
-      const fingerRoot = ringPos2
-      const pos = new Vector3(
-        (fingerRoot.x - cameraVideo.videoWidth / 2) * 4 / cameraVideo.videoHeight,
-        - (fingerRoot.y - cameraVideo.videoHeight / 2) * 4 / cameraVideo.videoHeight,
-        0
-      )
-      ringContainer.position.lerp(pos, 0.5)
-
-      const ringSize = root2.distanceTo(middle2) / 4
-      const ringScale = ringSize / 60
-      ringContainer.scale.set(ringScale, ringScale, ringScale)
-    */
     this.#threeRenderer.render(this.#scene, this.#camera)
   }
 }
