@@ -44,7 +44,7 @@ export class Renderer {
   #camera: PerspectiveCamera
   #scene: Scene
 
-  #maskContainer: Group | null = null
+  #maskContainers: Group[] = []
   #mask: Group | null = null
 
   #axes: Group
@@ -90,9 +90,6 @@ export class Renderer {
   }
 
   async loadMask() {
-    if (this.#maskContainer) {
-      throw new Error("Mask is already loaded")
-    }
     const gltf = await loadModel(maskModelUrl)
     const container = new Group()
     const mask = gltf.scene
@@ -107,7 +104,7 @@ export class Renderer {
     container.add(mask)
     this.#scene.add(container)
 
-    this.#maskContainer = container
+    this.#maskContainers.push(container)
     this.#mask = mask
   }
 
@@ -130,10 +127,19 @@ export class Renderer {
     return this.#threeRenderer.domElement
   }
 
-  render(position: Vector3, q: Quaternion, scale: number) {
-    this.#maskContainer.rotation.setFromQuaternion(q)
-    this.#maskContainer.position.set(position.x * 2 - this.#canvasWidth, this.#canvasHeigt + position.y * 2, 0)
-    this.#maskContainer.scale.set(scale, scale, scale)
+  render(faces: { position: Vector3, q: Quaternion, scale: number }[]) {
+    console.log(faces)
+    this.#maskContainers.forEach((container, i) => {
+      if (faces[i]) {
+        const { position, q, scale } = faces[i]
+        container.rotation.setFromQuaternion(q)
+        container.position.set(position.x * 2 - this.#canvasWidth, this.#canvasHeigt + position.y * 2, 0)
+        container.scale.set(scale, scale, scale)
+        container.visible = true
+      } else {
+        container.visible = false
+      }
+    })
     this.#threeRenderer.render(this.#scene, this.#camera)
   }
 }

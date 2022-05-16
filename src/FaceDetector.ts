@@ -14,6 +14,7 @@ export default class FaceDetector {
       runtime: "mediapipe",
       refineLandmarks: true,
       solutionPath: "https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh",
+      maxFaces: 10,
     })
   }
 

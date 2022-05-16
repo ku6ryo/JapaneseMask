@@ -17,6 +17,8 @@ async function main () {
   await detector.init()
   await cameraManager.start()
   await renderer.loadMask()
+  await renderer.loadMask()
+  await renderer.loadMask()
 
   const video = cameraManager.getVideo()
   const vw = video.videoWidth
@@ -32,12 +34,11 @@ async function main () {
   const loop = async () => {
     const video = cameraManager.getVideo()
     const faces = await detector.estimate(video)
-    if (faces.length > 0) {
-      const face = faces[0]
-      renderer.render(face.position, face.quaternion, face.scale)
-    } else {
-      renderer.render(new Vector3(), new Quaternion(0), 0)
-    }
+    renderer.render(faces.map(face => ({
+      position: face.position,
+      q: face.quaternion,
+      scale: face.scale,
+    })))
     mainContext.drawImage(video, 0, 0, mainCanvas.width, mainCanvas.height)
     mainContext.drawImage(renderer.getCanvas(), 0, 0, mainCanvas.width, mainCanvas.height)
     requestAnimationFrame(loop)
